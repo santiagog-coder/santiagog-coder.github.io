@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Training | Dashboard</title>
+  <!-- Tailwind CSS por CDN para prototipado rápido -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Supabase JS Client Oficial -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body {
+      background-color: #0d0f12;
+      color: #f3f4f6;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-4 sm:p-8 max-w-4xl mx-auto">
+
+  <!-- HEADER -->
+  <header class="flex items-center justify-between pb-6 border-b border-zinc-800">
+    <div>
+      <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+        <span class="w-3 h-3 rounded-full bg-emerald-500"></span> Training Log
+      </h1>
+      <p class="text-xs sm:text-sm text-zinc-400 mt-1">Gestor personal de fuerza y sobrecarga progresiva</p>
+    </div>
+    <div id="db-status" class="text-xs px-2.5 py-1 rounded-full bg-zinc-800 text-zinc-400 flex items-center gap-1.5">
+      <span class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></span> Conectando...
+    </div>
+  </header>
+
+  <!-- ACCIONES PRINCIPALES (TIPO HEVY) -->
+  <main class="my-8 space-y-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <!-- Botón Iniciar Sesión Rápida -->
+      <a href="/training/active" class="block p-5 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 hover:from-blue-500 hover:to-indigo-600 transition shadow-lg shadow-blue-950/40">
+        <div class="flex items-center justify-between">
+          <span class="text-xs uppercase tracking-wider font-semibold text-blue-200">En vivo</span>
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </div>
+        <h2 class="text-xl font-bold text-white mt-2">Iniciar Entrenamiento Libre</h2>
+        <p class="text-xs text-blue-100 mt-1">Registra series y RPE al vuelo sin plantilla previa.</p>
+      </a>
+
+      <!-- Botón Ver Rutinas -->
+      <a href="/training/routines" class="block p-5 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/80 transition">
+        <div class="flex items-center justify-between">
+          <span class="text-xs uppercase tracking-wider font-semibold text-zinc-400">Plantillas</span>
+          <svg class="w-5 h-5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+        </div>
+        <h2 class="text-xl font-bold text-white mt-2">Mis Rutinas</h2>
+        <p class="text-xs text-zinc-400 mt-1">Push, Pull, Legs y esquemas programados.</p>
+      </a>
+    </div>
+
+    <!-- SECCIÓN: ESTADO DEL CATÁLOGO DE EJERCICIOS -->
+    <section class="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-5">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="text-sm font-semibold text-zinc-200 uppercase tracking-wider">Catálogo Sincronizado</h3>
+          <p class="text-xs text-zinc-500">Ejercicios disponibles en Supabase</p>
+        </div>
+        <a href="/training/create-routine" class="text-xs font-medium text-emerald-400 hover:text-emerald-300">
+          + Crear Rutina
+        </a>
+      </div>
+
+      <!-- Lista / Indicador -->
+      <div id="exercise-summary" class="text-sm text-zinc-400 space-y-2">
+        <p class="animate-pulse">Cargando base de datos...</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="pt-6 border-t border-zinc-800/80 flex items-center justify-between text-xs text-zinc-500">
+    <span>Ecosistema Personal • Web & watchOS</span>
+    <span class="font-mono">v0.1</span>
+  </footer>
+
+  <!-- SCRIPT DE CONEXIÓN CON SUPABASE -->
+  <script>
+    // REEMPLAZA ESTOS DOS VALORES CON LOS DE TU PANEL DE SUPABASE (Settings -> API):
+    const SUPABASE_URL = "https://TU_PROYECTO.supabase.co";
+    const SUPABASE_ANON_KEY = "TU_SUPABASE_ANON_KEY";
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function checkConnection() {
+      const statusBadge = document.getElementById("db-status");
+      const summaryDiv = document.getElementById("exercise-summary");
+
+      try {
+        const { data, count, error } = await supabase
+          .from("exercises")
+          .select("id, name, primary_muscle, equipment, base_weight_kg", { count: "exact" })
+          .limit(5);
+
+        if (error) throw error;
+
+        // Conexión exitosa
+        statusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500"></span> Conectado`;
+        statusBadge.className = "text-xs px-2.5 py-1 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-800/50 flex items-center gap-1.5";
+
+        let sampleHtml = data.map(ex => `
+          <li class="flex items-center justify-between py-1.5 border-b border-zinc-800/40 text-xs">
+            <span class="font-medium text-zinc-300">${ex.name}</span>
+            <span class="text-zinc-500 font-mono">${ex.equipment} • ${ex.base_weight_kg > 0 ? ex.base_weight_kg + 'kg base' : 'libre'}</span>
+          </li>
+        `).join("");
+
+        summaryDiv.innerHTML = `
+          <p class="text-xs text-zinc-400 mb-2">Total de ejercicios registrados: <strong class="text-white">${count}</strong></p>
+          <ul class="divide-y divide-zinc-800/40">${sampleHtml}</ul>
+        `;
+
+      } catch (err) {
+        console.error(err);
+        statusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-red-500"></span> Desconectado`;
+        statusBadge.className = "text-xs px-2.5 py-1 rounded-full bg-red-950/60 text-red-300 border border-red-800/50 flex items-center gap-1.5";
+        summaryDiv.innerHTML = `<p class="text-xs text-red-400">Error al consultar Supabase. Revisa las claves SUPABASE_URL y SUPABASE_ANON_KEY en el script.</p>`;
+      }
+    }
+
+    checkConnection();
+  </script>
+</body>
+</html>
