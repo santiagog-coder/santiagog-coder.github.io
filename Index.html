@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Santiago Guepud</title>
+  <style>
+    :root {
+      --bg: #0d0f12;
+      --card-bg: #16191f;
+      --border: #262b35;
+      --text: #f0f3f6;
+      --text-muted: #8b949e;
+      --accent: #ffffff;
+      --accent-text: #0d0f12;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 24px 16px;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 380px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    }
+    .avatar {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: #21262d;
+      margin: 0 auto 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border: 2px solid var(--border);
+    }
+    h1 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    p.bio {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin-bottom: 24px;
+    }
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 18px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    .btn:active {
+      transform: scale(0.98);
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--accent-text);
+      font-weight: 600;
+    }
+    .btn-secondary {
+      background: #21262d;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    footer {
+      margin-top: 28px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <main class="card">
+    <div class="avatar">SG</div>
+    <h1>Santiago Guepud</h1>
+    <p class="bio">Contacto digital & perfil personal</p>
+
+    <div class="btn-group">
+      <!-- Botón de guardar contacto -->
+      <a href="contacto.vcf" class="btn btn-primary">
+        Guardar contacto (.vcf)
+      </a>
+
+      <!-- Redes sociales -->
+      <a href="https://instagram.com/santiagopud" target="_blank" class="btn btn-secondary">
+        Instagram
+      </a>
+      <a href="mailto:hola@santiagoguepud.com" class="btn btn-secondary">
+        Enviar correo
+      </a>
+    </div>
+
+    <footer>
+      santiagoguepud.com
+    </footer>
+  </main>
+
+</body>
+</html>
