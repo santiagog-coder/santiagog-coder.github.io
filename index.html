@@ -6,119 +6,185 @@
   <title>Santiago Guepud</title>
   <style>
     :root {
-      --bg: #0d0f12;
-      --card-bg: #16191f;
-      --border: #262b35;
-      --text: #f0f3f6;
-      --text-muted: #8b949e;
-      --accent: #ffffff;
-      --accent-text: #0d0f12;
+      /* Estética Apple: fondo luminoso, neutros sobrios y naranja de acento */
+      --bg: #f5f5f7;
+      --card-bg: rgba(255, 255, 255, 0.82);
+      --card-border: rgba(0, 0, 0, 0.06);
+      --text-primary: #1d1d1f;
+      --text-secondary: #86868b;
+      --accent-orange: #ff6a00;
+      --accent-orange-hover: #e65f00;
+      --btn-secondary-bg: #ffffff;
+      --btn-secondary-border: rgba(0, 0, 0, 0.08);
+      --shadow-soft: 0 16px 40px -10px rgba(0, 0, 0, 0.07);
     }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
+
     body {
       background-color: var(--bg);
-      color: var(--text);
+      color: var(--text-primary);
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      padding: 24px 16px;
+      padding: 32px 20px;
     }
+
     .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
       width: 100%;
-      max-width: 380px;
-      padding: 32px 24px;
+      max-width: 390px;
+      background: var(--card-bg);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid var(--card-border);
+      border-radius: 36px;
+      padding: 44px 28px 36px;
+      box-shadow: var(--shadow-soft);
       text-align: center;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
     }
-    .avatar {
-      width: 88px;
-      height: 88px;
-      border-radius: 50%;
-      background: #21262d;
-      margin: 0 auto 18px;
+
+    /* Monograma con sutileza Apple */
+    .avatar-wrapper {
+      width: 82px;
+      height: 82px;
+      margin: 0 auto 20px;
+      border-radius: 24px;
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
-      font-weight: 600;
-      color: var(--text-muted);
-      border: 2px solid var(--border);
+      position: relative;
     }
+
+    .avatar-text {
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.04em;
+    }
+
+    /* Detalle mínimo de acento */
+    .avatar-accent-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-orange);
+      border-radius: 50%;
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+    }
+
     h1 {
-      font-size: 1.35rem;
+      font-size: 1.65rem;
       font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 6px;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+      color: var(--text-primary);
     }
-    p.bio {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      line-height: 1.4;
-      margin-bottom: 24px;
+
+    .meta {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 34px;
     }
-    .btn-group {
+
+    .btn-stack {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
+
     .btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 13px 18px;
-      border-radius: 12px;
+      padding: 15px 22px;
+      border-radius: 18px;
       font-size: 0.95rem;
       font-weight: 500;
       text-decoration: none;
-      transition: transform 0.15s ease, opacity 0.15s ease;
+      letter-spacing: -0.01em;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
     .btn:active {
       transform: scale(0.98);
     }
+
+    /* Botón de acción principal (Naranja Apple) */
     .btn-primary {
-      background: var(--accent);
-      color: var(--accent-text);
+      background: var(--accent-orange);
+      color: #ffffff;
       font-weight: 600;
+      box-shadow: 0 6px 18px rgba(255, 106, 0, 0.22);
     }
+
+    .btn-primary:hover {
+      background: var(--accent-orange-hover);
+    }
+
+    /* Botones secundarios estilo iOS / macOS */
     .btn-secondary {
-      background: #21262d;
-      color: var(--text);
-      border: 1px solid var(--border);
+      background: var(--btn-secondary-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--btn-secondary-border);
     }
+
+    .btn-secondary:hover {
+      background: #fafafa;
+      border-color: rgba(0, 0, 0, 0.14);
+    }
+
     footer {
-      margin-top: 28px;
-      font-size: 0.75rem;
-      color: var(--text-muted);
+      margin-top: 36px;
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.01em;
     }
   </style>
 </head>
 <body>
 
   <main class="card">
-    <div class="avatar">SG</div>
+    <div class="avatar-wrapper">
+      <span class="avatar-text">SG</span>
+      <span class="avatar-accent-dot"></span>
+    </div>
+    
     <h1>Santiago Guepud</h1>
-    <p class="bio">Contacto digital & perfil personal</p>
+    <p class="meta">
+      <span id="user-age"></span> · Quito
+    </p>
 
-    <div class="btn-group">
-      <!-- Botón de guardar contacto -->
+    <div class="btn-stack">
+      <!-- Guardar contacto directo -->
       <a href="contacto.vcf" class="btn btn-primary">
-        Guardar contacto (.vcf)
+        Guardar contacto
       </a>
 
-      <!-- Redes sociales -->
-      <a href="https://instagram.com/santiagopud" target="_blank" class="btn btn-secondary">
+      <!-- WhatsApp limpio -->
+      <a href="https://wa.me/593987070493" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+        WhatsApp
+      </a>
+
+      <!-- Instagram -->
+      <a href="https://instagram.com/santiago.guepud" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
         Instagram
       </a>
-      <a href="mailto:hola@santiagoguepud.com" class="btn btn-secondary">
+
+      <!-- Correo electrónico con hey@ -->
+      <a href="mailto:hey@santiagoguepud.com" class="btn btn-secondary">
         Enviar correo
       </a>
     </div>
@@ -127,6 +193,22 @@
       santiagoguepud.com
     </footer>
   </main>
+
+  <script>
+    // Cálculo dinámico de edad (20 de septiembre de 2004)
+    (function calculateAge() {
+      const birthDate = new Date(2004, 8, 20); // Septiembre es mes 8 (base 0)
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      
+      document.getElementById('user-age').textContent = `${age} años`;
+    })();
+  </script>
 
 </body>
 </html>
